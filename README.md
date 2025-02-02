@@ -1,10 +1,12 @@
 # Oops, Errors
 
+[![Go Reference](https://pkg.go.dev/badge/github.com/jesse0michael/oops.svg)](https://pkg.go.dev/github.com/jesse0michael/oops)
+
 Error handling for adding attributes and source location to errors when logging them. 
 
 Inspired by [https://github.com/samber/oops](https://github.com/samber/oops) with a minimal API.
 
-Works with [log/slog](https://pkg.go.dev/log/slog) through a [LogerValue]() that decorates the logged error attribute with the attributes and source location to any `oops.Error`.
+Works with [log/slog](https://pkg.go.dev/log/slog) through a [LogValue](https://pkg.go.dev/log/slog#LogValuer) that decorates the logged error attribute with the attributes and source location to any `oops.Error`.
 
 ## Example
 
@@ -38,21 +40,23 @@ func main() {
 }
 ```
 
->{
->   "time":"2025-02-01T21:59:54.959869-07:00",
->   "level":"ERROR",
->   "msg":"error",
->   "err":{
->      "err":"process not found",
->      "id":"oops",
->      "method":"Run",
->      "source":{
->         "file":"#####/github.com/jesse0michael/oops/README.md",
->         "function":"github.com/jesse0michael/oops.process",
->         "line":30
->      }
->   }
->}
+```json
+{
+   "time":"2025-02-01T21:59:54.959869-07:00",
+   "level":"ERROR",
+   "msg":"error",
+   "err":{
+      "err":"process not found",
+      "id":"oops",
+      "method":"Run",
+      "source":{
+         "file":"#####/github.com/jesse0michael/oops/README.md",
+         "function":"github.com/jesse0michael/oops.process",
+         "line":30
+      }
+   }
+}
+```
 
 This example highlights some of the different ways to create and decorate errors by dropping in the oops package. Create a new error with `oops.New` or wrap an existing error with `oops.Wrap` or use `oops.Errorf` to format an error message.
 
