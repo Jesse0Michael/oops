@@ -5,7 +5,8 @@ import (
 	"log/slog"
 )
 
-var oopsField = "oops"
+// attrField is the field used to log oops error attributes.
+var attrField = "oops"
 
 // Handler logs oops errors with additional context.
 type Handler struct {
@@ -35,7 +36,7 @@ func (h Handler) Handle(ctx context.Context, record slog.Record) error {
 		if oops, ok := attr.Value.Any().(Error); ok {
 			newRecord.AddAttrs(slog.String(attr.Key, oops.err.Error()))
 			if attrs := oops.LogAttrs(); len(attrs) > 0 {
-				newRecord.AddAttrs(slog.Any(oopsField, attrs))
+				newRecord.AddAttrs(slog.Any(attrField, attrs))
 			}
 			return true
 		}
@@ -46,8 +47,8 @@ func (h Handler) Handle(ctx context.Context, record slog.Record) error {
 	return h.Handler.Handle(ctx, newRecord)
 }
 
-// SetOopsField overrides the field used to oops error attributes.
+// SetAttrField overrides the field used to oops error attributes.
 // default is "oops".
-func SetOopsField(field string) {
-	oopsField = field
+func SetAttrField(field string) {
+	attrField = field
 }

@@ -92,13 +92,8 @@ logger := slog.New(oops.NewOopsHandler(slog.NewJSONHandler(os.Stdout, nil)))
 }
 ```
 
-## Configuration
-
-The slog handler field can be overidden with `oops.SetOopsField("field")`.
-
 > [!NOTE]  
-> runtime source location can be disabled by overwriting the `oops.WithSource` package variable.
-> ```go
-> oops.WithSource = false 
-> ```
+> runtime source location can be disabled with `oops.EnableSource(false)`.
+>
+> The slog handler attribute field can be overridden with `oops.SetAttrField("field")`.
 >

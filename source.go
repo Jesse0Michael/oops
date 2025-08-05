@@ -9,7 +9,7 @@ type Source struct {
 }
 
 func source() *Source {
-	if WithSource {
+	if sourceEnabled {
 		var pcs [1]uintptr
 		// skip [runtime.Callers, this function, this function's caller]
 		runtime.Callers(3, pcs[:])

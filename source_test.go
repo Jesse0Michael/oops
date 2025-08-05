@@ -11,7 +11,7 @@ func wrap() *Source {
 }
 
 func Test_source(t *testing.T) {
-	defer func() { WithSource = true }()
+	defer func() { EnableSource(true) }()
 	tests := []struct {
 		name    string
 		enabled bool
@@ -34,7 +34,7 @@ func Test_source(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			WithSource = tt.enabled
+			EnableSource(tt.enabled)
 			got := wrap()
 
 			if tt.want == nil {

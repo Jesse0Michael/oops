@@ -5,8 +5,8 @@ import (
 	"fmt"
 )
 
-// WithSource is a package variable to enable/disable tracking the source location.
-var WithSource = true
+// sourceEnabled is a package variable to enable/disable tracking the source location.
+var sourceEnabled = true
 
 // New returns a new oops error.
 func New(msg string) Error {
@@ -56,4 +56,10 @@ func Errorf(format string, args ...any) Error {
 	}
 
 	return e
+}
+
+// EnableSource enables or disables source tracking.
+// default is true.
+func EnableSource(enabled bool) {
+	sourceEnabled = enabled
 }
