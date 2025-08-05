@@ -2,6 +2,8 @@ package oops
 
 import (
 	"log/slog"
+	"maps"
+	"slices"
 )
 
 type Error struct {
@@ -12,6 +14,9 @@ type Error struct {
 
 // Error returns undecorated error.
 func (e Error) Error() string {
+	if e.err == nil {
+		return ""
+	}
 	return e.err.Error()
 }
 
@@ -21,23 +26,21 @@ func (e Error) LogValue() slog.Value {
 		attrs = append(attrs, slog.String("err", err))
 	}
 
-	for k, v := range e.attributes {
-		attrs = append(attrs, slog.Any(k, v))
-	}
-
-	sources := make([]slog.Value, len(e.sources))
-	for i, s := range e.sources {
-		sources[i] = slog.GroupValue(
-			slog.String("file", s.File),
-			slog.String("function", s.Function),
-			slog.Int("line", s.Line),
-		)
-	}
-	if len(sources) > 0 {
-		attrs = append(attrs, slog.Any("source", sources))
-	}
+	attrs = append(attrs, e.LogAttrs()...)
 
 	return slog.GroupValue(attrs...)
+}
+
+func (e Error) LogAttrs() []slog.Attr {
+	var attrs []slog.Attr
+	for _, k := range slices.Sorted(maps.Keys(e.attributes)) {
+		attrs = append(attrs, slog.Any(k, e.attributes[k]))
+	}
+
+	if len(e.sources) > 0 {
+		attrs = append(attrs, slog.Any("source", e.sources))
+	}
+	return attrs
 }
 
 // With collects key-value pairs to return with the error.

@@ -66,6 +66,36 @@ Add attributes to the error with the `With` method. The `With` method can take a
 
 Wrapping or formatting an oops.Error with `%w` will append the source location with the new error and preserve attributes of any prior error.
 
+Includes a slog Handler that will preserve the specified error field used with the `oops.Error` as the string representation of the inner error, and add the error decoration to the slog key `oops`.
+
+```go
+logger := slog.New(oops.NewOopsHandler(slog.NewJSONHandler(os.Stdout, nil)))
+```
+
+```json
+{
+   "time":"2025-02-01T21:59:54.959869-07:00",
+   "level":"ERROR",
+   "msg":"process failed",
+   "error": "process not found",
+   "oops":{
+      "id":"oops",
+      "method":"Run",
+      "source":[
+         {
+            "file":"#####/github.com/jesse0michael/oops/README.md",
+            "function":"github.com/jesse0michael/oops.process",
+            "line":30
+         }
+      ]
+   }
+}
+```
+
+## Configuration
+
+The slog handler field can be overidden with `oops.SetOopsField("field")`.
+
 > [!NOTE]  
 > runtime source location can be disabled by overwriting the `oops.WithSource` package variable.
 > ```go

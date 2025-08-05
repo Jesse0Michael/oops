@@ -3,9 +3,9 @@ package oops
 import "runtime"
 
 type Source struct {
-	Function string
-	File     string
-	Line     int
+	Function string `json:"function"`
+	File     string `json:"file"`
+	Line     int    `json:"line"`
 }
 
 func source() *Source {
