@@ -33,10 +33,8 @@ func (e Error) LogValue() slog.Value {
 			slog.Int("line", s.Line),
 		)
 	}
-	if len(sources) == 1 {
-		attrs = append(attrs, slog.Any("source", sources[0]))
-	} else if len(sources) > 0 {
-		attrs = append(attrs, slog.Any("sources", sources))
+	if len(sources) > 0 {
+		attrs = append(attrs, slog.Any("source", sources))
 	}
 
 	return slog.GroupValue(attrs...)

@@ -49,11 +49,13 @@ func main() {
       "err":"process not found",
       "id":"oops",
       "method":"Run",
-      "source":{
-         "file":"#####/github.com/jesse0michael/oops/README.md",
-         "function":"github.com/jesse0michael/oops.process",
-         "line":30
-      }
+      "source":[
+         {
+            "file":"#####/github.com/jesse0michael/oops/README.md",
+            "function":"github.com/jesse0michael/oops.process",
+            "line":30
+         }
+      ]
    }
 }
 ```

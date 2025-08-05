@@ -18,7 +18,7 @@ func ExampleNew() {
 
 	// Output:
 	// oops
-	// level=ERROR msg=error err.err=oops err.id=new err.source.file=oops_test.go err.source.function=github.com/jesse0michael/oops.ExampleNew err.source.line=14
+	// level=ERROR msg=error err.err=oops err.id=new err.source="[[file=oops_test.go function=github.com/jesse0michael/oops.ExampleNew line=14]]"
 }
 
 func ExampleWrap() {
@@ -32,7 +32,8 @@ func ExampleWrap() {
 
 	// Output:
 	// oops
-	// level=ERROR msg=error err.err=oops err.id=wrap err.source.file=oops_test.go err.source.function=github.com/jesse0michael/oops.ExampleWrap err.source.line=28
+	// level=ERROR msg=error err.err=oops err.id=wrap err.source="[[file=oops_test.go function=github.com/jesse0michael/oops.ExampleWrap line=28]]"
+
 }
 
 func ExampleWrap_oopsError() {
@@ -46,7 +47,7 @@ func ExampleWrap_oopsError() {
 
 	// Output:
 	// oops
-	// level=ERROR msg=error err.err=oops err.id=wrap err.component=example err.sources="[[file=oops_test.go function=github.com/jesse0michael/oops.ExampleWrap_oopsError line=42] [file=oops_test.go function=github.com/jesse0michael/oops.ExampleWrap_oopsError line=41]]"
+	// level=ERROR msg=error err.err=oops err.id=wrap err.component=example err.source="[[file=oops_test.go function=github.com/jesse0michael/oops.ExampleWrap_oopsError line=43] [file=oops_test.go function=github.com/jesse0michael/oops.ExampleWrap_oopsError line=42]]"
 }
 
 func ExampleErrorf() {
@@ -59,7 +60,7 @@ func ExampleErrorf() {
 
 	// Output:
 	// failure: Errorf, oops
-	// level=ERROR msg=error err.err="failure: Errorf, oops" err.source.file=oops_test.go err.source.function=github.com/jesse0michael/oops.ExampleErrorf err.source.line=55
+	// level=ERROR msg=error err.err="failure: Errorf, oops" err.source="[[file=oops_test.go function=github.com/jesse0michael/oops.ExampleErrorf line=56]]"
 }
 
 func ExampleErrorf_wrapOopsError() {
@@ -73,7 +74,7 @@ func ExampleErrorf_wrapOopsError() {
 
 	// Output:
 	// failure: Errorf, oops
-	// level=ERROR msg=error err.err="failure: Errorf, oops" err.id=wrap err.component=example err.sources="[[file=oops_test.go function=github.com/jesse0michael/oops.ExampleErrorf_wrapOopsError line=69] [file=oops_test.go function=github.com/jesse0michael/oops.ExampleErrorf_wrapOopsError line=68]]"
+	// level=ERROR msg=error err.err="failure: Errorf, oops" err.id=wrap err.component=example err.source="[[file=oops_test.go function=github.com/jesse0michael/oops.ExampleErrorf_wrapOopsError line=70] [file=oops_test.go function=github.com/jesse0michael/oops.ExampleErrorf_wrapOopsError line=69]]"
 }
 
 // logger returns a slog logger to use in these example tests that removes non-deterministic and host-specific values.
@@ -86,9 +87,9 @@ func logger() *slog.Logger {
 			if a.Key == "file" {
 				return slog.String("file", filepath.Base(a.Value.String()))
 			}
-			if a.Key == "sources" {
+			if a.Key == "source" {
 				if s, ok := a.Value.Any().([]slog.Value); ok {
-					sources := make([]slog.Value, len(s))
+					source := make([]slog.Value, len(s))
 					for i, v := range s {
 						vals := make([]slog.Attr, len(v.Group()))
 						for x, y := range v.Group() {
@@ -98,9 +99,9 @@ func logger() *slog.Logger {
 								vals[x] = y
 							}
 						}
-						sources[i] = slog.GroupValue(vals...)
+						source[i] = slog.GroupValue(vals...)
 					}
-					return slog.Any("sources", sources)
+					return slog.Any("source", source)
 				}
 			}
 			return a
