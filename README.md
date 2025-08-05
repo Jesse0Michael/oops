@@ -35,7 +35,7 @@ func main() {
 
     _, err := s.process(ctx, "oops")
     if err != nil {
-        logger.Error("process failed", "err", err)
+        logger.Error("process failed", "error", err)
     }
 }
 ```
@@ -44,8 +44,8 @@ func main() {
 {
    "time":"2025-02-01T21:59:54.959869-07:00",
    "level":"ERROR",
-   "msg":"error",
-   "err":{
+   "msg":"process failed",
+   "error":{
       "err":"process not found",
       "id":"oops",
       "method":"Run",
