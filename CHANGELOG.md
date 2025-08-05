@@ -1,3 +1,9 @@
+## [1.0.1](https://github.com/Jesse0Michael/oops/compare/v1.0.0...v1.0.1) (2025-08-05)
+
+### Bug Fixes
+
+- update repo dependencies ([b3fccf0](https://github.com/Jesse0Michael/oops/commit/b3fccf0a991daf8b6744ecf83b20b81799256ecf))
+
 # 1.0.0 (2025-02-02)
 
 ### Chores
