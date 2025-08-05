@@ -1,3 +1,17 @@
+# [1.2.0](https://github.com/Jesse0Michael/oops/compare/v1.1.0...v1.2.0) (2025-08-05)
+
+### Bug Fixes
+
+- consistent package configuration ([641c310](https://github.com/Jesse0Michael/oops/commit/641c310c9c0057f5ce50a7cd5849cbf5c8cd2e06))
+
+### Features
+
+- add oops handler ([25adb91](https://github.com/Jesse0Michael/oops/commit/25adb91ce96f39a2dbeefeb2afbace632f851862))
+
+### Other
+
+- Merge branch 'main' of github.com:Jesse0Michael/oops ([866ebf4](https://github.com/Jesse0Michael/oops/commit/866ebf4c618e7545a3918a133271f3bfd547d272))
+
 # [1.1.0](https://github.com/Jesse0Michael/oops/compare/v1.0.1...v1.1.0) (2025-08-05)
 
 ### Features
