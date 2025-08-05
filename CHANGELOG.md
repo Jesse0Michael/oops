@@ -1,3 +1,13 @@
+# [1.1.0](https://github.com/Jesse0Michael/oops/compare/v1.0.1...v1.1.0) (2025-08-05)
+
+### Features
+
+- make source attribute consistent ([acc9106](https://github.com/Jesse0Michael/oops/commit/acc910697f8fef52b181b92994c11592bd6f4b74))
+
+### Other
+
+- Merge branch 'main' of github.com:Jesse0Michael/oops ([0dfe248](https://github.com/Jesse0Michael/oops/commit/0dfe24877d3567d1e993361df006d133b8222a32))
+
 ## [1.0.1](https://github.com/Jesse0Michael/oops/compare/v1.0.0...v1.0.1) (2025-08-05)
 
 ### Bug Fixes
