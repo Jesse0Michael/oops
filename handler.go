@@ -34,7 +34,7 @@ func (h Handler) Handle(ctx context.Context, record slog.Record) error {
 
 	record.Attrs(func(attr slog.Attr) bool {
 		if oops, ok := attr.Value.Any().(Error); ok {
-			newRecord.AddAttrs(slog.String(attr.Key, oops.err.Error()))
+			newRecord.AddAttrs(slog.Any(attr.Key, oops.err))
 			if attrs := oops.LogAttrs(); len(attrs) > 0 {
 				newRecord.AddAttrs(slog.Any(attrField, attrs))
 			}
