@@ -19,7 +19,11 @@ func New(msg string) Error {
 }
 
 // Wrap wraps an error as an oops error.
-func Wrap(err error) Error {
+// supports supports [string, any]... pairs or slog.Attr values.
+func Wrap(err error, args ...any) error {
+	if err == nil {
+		return nil
+	}
 	var sources []Source
 	if s := source(); s != nil {
 		sources = append(sources, *s)
@@ -29,12 +33,13 @@ func Wrap(err error) Error {
 	if errors.As(err, &oops) {
 		return Error{
 			err:        err,
-			attributes: oops.attributes,
+			attributes: argsToAttr(oops.attributes, args),
 			sources:    append(sources, oops.sources...),
+			code:       oops.code,
 		}
 	}
 
-	return Error{err: err, sources: sources}
+	return Error{err: err, attributes: argsToAttr(nil, args), sources: sources}
 }
 
 // Errorf formats a string and returns a new oops error.
@@ -56,6 +61,20 @@ func Errorf(format string, args ...any) Error {
 	}
 
 	return e
+}
+
+// Code returns the oops error code, if the error is an oops error.
+// if the error code is not set, it looks for a "code" attribute set to an int.
+func Code(err error) int {
+	var e Error
+	if errors.As(err, &e) {
+		if e.code > 0 {
+			return e.code
+		} else if code, ok := e.attributes["code"].(int); ok {
+			return code
+		}
+	}
+	return 0
 }
 
 // EnableSource enables or disables source tracking.

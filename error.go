@@ -10,6 +10,7 @@ type Error struct {
 	err        error
 	attributes map[string]any
 	sources    []Source
+	code       int
 }
 
 // Error returns undecorated error.
@@ -47,6 +48,12 @@ func (e Error) LogAttrs() []slog.Attr {
 // supports supports [string, any]... pairs or slog.Attr values.
 func (e Error) With(args ...any) Error {
 	e.attributes = argsToAttr(e.attributes, args)
+	return e
+}
+
+// Code sets the error code.
+func (e Error) Code(code int) Error {
+	e.code = code
 	return e
 }
 
