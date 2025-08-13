@@ -1,3 +1,9 @@
+# [1.3.0](https://github.com/Jesse0Michael/oops/compare/v1.2.0...v1.3.0) (2025-08-07)
+
+### Features
+
+- set the error in the handler ([5a96fa6](https://github.com/Jesse0Michael/oops/commit/5a96fa6688a6e3a8fafadb279b018519863bb67b))
+
 # [1.2.0](https://github.com/Jesse0Michael/oops/compare/v1.1.0...v1.2.0) (2025-08-05)
 
 ### Bug Fixes
