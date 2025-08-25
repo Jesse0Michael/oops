@@ -1,3 +1,13 @@
+## [1.4.1](https://github.com/Jesse0Michael/oops/compare/v1.4.0...v1.4.1) (2025-08-25)
+
+### Bug Fixes
+
+- unwrap errors ([665a1d1](https://github.com/Jesse0Michael/oops/commit/665a1d1a18eb88d3ac1bb33d8d693a7810a6ef4c))
+
+### Other
+
+- Merge branch 'main' of github.com:Jesse0Michael/oops ([9b94965](https://github.com/Jesse0Michael/oops/commit/9b94965454d0823188ad4a1696b1b79baf759739))
+
 # [1.4.0](https://github.com/Jesse0Michael/oops/compare/v1.3.0...v1.4.0) (2025-08-13)
 
 ### Features
