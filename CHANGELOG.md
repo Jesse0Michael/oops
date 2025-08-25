@@ -1,3 +1,13 @@
+# [1.4.0](https://github.com/Jesse0Michael/oops/compare/v1.3.0...v1.4.0) (2025-08-13)
+
+### Features
+
+- add error code support ([0c327c9](https://github.com/Jesse0Michael/oops/commit/0c327c95b4849a5f440f7dc7b739974f861fb7fb))
+
+### Other
+
+- Merge branch 'main' of github.com:Jesse0Michael/oops ([e0ef665](https://github.com/Jesse0Michael/oops/commit/e0ef6652706792e3bf63cabaaa52d8fb7ac308e3))
+
 # [1.3.0](https://github.com/Jesse0Michael/oops/compare/v1.2.0...v1.3.0) (2025-08-07)
 
 ### Features
