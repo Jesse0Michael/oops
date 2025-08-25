@@ -14,14 +14,19 @@ type Error struct {
 }
 
 // Error returns undecorated error.
-func (e Error) Error() string {
+func (e *Error) Error() string {
 	if e.err == nil {
 		return ""
 	}
 	return e.err.Error()
 }
 
-func (e Error) LogValue() slog.Value {
+// Unwrap allows errors.As and errors.Is to find the inner error.
+func (e *Error) Unwrap() error {
+	return e.err
+}
+
+func (e *Error) LogValue() slog.Value {
 	var attrs []slog.Attr
 	if err := e.Error(); err != "" {
 		attrs = append(attrs, slog.String("err", err))
@@ -32,7 +37,7 @@ func (e Error) LogValue() slog.Value {
 	return slog.GroupValue(attrs...)
 }
 
-func (e Error) LogAttrs() []slog.Attr {
+func (e *Error) LogAttrs() []slog.Attr {
 	var attrs []slog.Attr
 	for _, k := range slices.Sorted(maps.Keys(e.attributes)) {
 		attrs = append(attrs, slog.Any(k, e.attributes[k]))
@@ -46,13 +51,13 @@ func (e Error) LogAttrs() []slog.Attr {
 
 // With collects key-value pairs to return with the error.
 // supports supports [string, any]... pairs or slog.Attr values.
-func (e Error) With(args ...any) Error {
+func (e *Error) With(args ...any) *Error {
 	e.attributes = argsToAttr(e.attributes, args)
 	return e
 }
 
 // Code sets the error code.
-func (e Error) Code(code int) Error {
+func (e *Error) Code(code int) *Error {
 	e.code = code
 	return e
 }

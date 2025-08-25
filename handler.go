@@ -2,6 +2,7 @@ package oops
 
 import (
 	"context"
+	"errors"
 	"log/slog"
 )
 
@@ -33,10 +34,15 @@ func (h Handler) Handle(ctx context.Context, record slog.Record) error {
 	newRecord := slog.NewRecord(record.Time, record.Level, record.Message, record.PC)
 
 	record.Attrs(func(attr slog.Attr) bool {
-		if oops, ok := attr.Value.Any().(Error); ok {
-			newRecord.AddAttrs(slog.Any(attr.Key, oops.err))
-			if attrs := oops.LogAttrs(); len(attrs) > 0 {
-				newRecord.AddAttrs(slog.Any(attrField, attrs))
+		if err, ok := attr.Value.Any().(error); ok {
+			var oops *Error
+			if errors.As(err, &oops) {
+				newRecord.AddAttrs(slog.Any(attr.Key, oops.err))
+				if attrs := oops.LogAttrs(); len(attrs) > 0 {
+					newRecord.AddAttrs(slog.Any(attrField, attrs))
+				}
+			} else {
+				newRecord.AddAttrs(attr)
 			}
 			return true
 		}

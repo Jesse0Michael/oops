@@ -40,7 +40,7 @@ func TestOopsHandler_Handle(t *testing.T) {
 			attrs: []slog.Attr{
 				slog.Any("error", &Error{}),
 			},
-			log: `{"level":"ERROR","msg":"message"}`,
+			log: `{"level":"ERROR","msg":"message","error":null}`,
 		},
 		{
 			name: "oops error without attributes",
@@ -55,6 +55,13 @@ func TestOopsHandler_Handle(t *testing.T) {
 				slog.Any("error", New("oops").With("id", "new", "component", "example")),
 			},
 			log: `{"level":"ERROR","msg":"message","error":"oops","oops":{"component":"example","id":"new","source":[{"function":"github.com/jesse0michael/oops.TestOopsHandler_Handle","file":"handler_test.go","line":55}]}}`,
+		},
+		{
+			name: "oops wrapped in non-oops error",
+			attrs: []slog.Attr{
+				slog.Any("error", &wrappedError{underlying: New("oops").With("id", "new", "component", "example")}),
+			},
+			log: `{"level":"ERROR","msg":"message","error":"oops","oops":{"component":"example","id":"new","source":[{"function":"github.com/jesse0michael/oops.TestOopsHandler_Handle","file":"handler_test.go","line":62}]}}`,
 		},
 	}
 

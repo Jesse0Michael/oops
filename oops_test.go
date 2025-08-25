@@ -19,7 +19,7 @@ func ExampleNew() {
 
 	// Output:
 	// oops
-	// level=ERROR msg=error err.err=oops err.id=new err.source="[{Function:github.com/jesse0michael/oops.ExampleNew File:oops_test.go Line:14}]"
+	// level=ERROR msg=error err.err=oops err.id=new err.source="[{Function:github.com/jesse0michael/oops.ExampleNew File:oops_test.go Line:15}]"
 }
 
 func ExampleWrap() {
@@ -33,7 +33,7 @@ func ExampleWrap() {
 
 	// Output:
 	// oops
-	// level=ERROR msg=error err.err=oops err.id=wrap err.source="[{Function:github.com/jesse0michael/oops.ExampleWrap File:oops_test.go Line:28}]"
+	// level=ERROR msg=error err.err=oops err.id=wrap err.source="[{Function:github.com/jesse0michael/oops.ExampleWrap File:oops_test.go Line:29}]"
 }
 
 func ExampleWrap_oopsError() {
@@ -47,7 +47,7 @@ func ExampleWrap_oopsError() {
 
 	// Output:
 	// oops
-	// level=ERROR msg=error err.err=oops err.component=example err.id=wrap err.source="[{Function:github.com/jesse0michael/oops.ExampleWrap_oopsError File:oops_test.go Line:42} {Function:github.com/jesse0michael/oops.ExampleWrap_oopsError File:oops_test.go Line:41}]"
+	// level=ERROR msg=error err.err=oops err.component=example err.id=wrap err.source="[{Function:github.com/jesse0michael/oops.ExampleWrap_oopsError File:oops_test.go Line:42} {Function:github.com/jesse0michael/oops.ExampleWrap_oopsError File:oops_test.go Line:43}]"
 }
 
 func ExampleErrorf() {
@@ -60,7 +60,7 @@ func ExampleErrorf() {
 
 	// Output:
 	// failure: Errorf, oops
-	// level=ERROR msg=error err.err="failure: Errorf, oops" err.source="[{Function:github.com/jesse0michael/oops.ExampleErrorf File:oops_test.go Line:55}]"
+	// level=ERROR msg=error err.err="failure: Errorf, oops" err.source="[{Function:github.com/jesse0michael/oops.ExampleErrorf File:oops_test.go Line:56}]"
 }
 
 func ExampleErrorf_wrapOopsError() {
@@ -74,7 +74,7 @@ func ExampleErrorf_wrapOopsError() {
 
 	// Output:
 	// failure: Errorf, oops
-	// level=ERROR msg=error err.err="failure: Errorf, oops" err.component=example err.id=wrap err.source="[{Function:github.com/jesse0michael/oops.ExampleErrorf_wrapOopsError File:oops_test.go Line:69} {Function:github.com/jesse0michael/oops.ExampleErrorf_wrapOopsError File:oops_test.go Line:68}]"
+	// level=ERROR msg=error err.err="failure: Errorf, oops" err.component=example err.id=wrap err.source="[{Function:github.com/jesse0michael/oops.ExampleErrorf_wrapOopsError File:oops_test.go Line:70} {Function:github.com/jesse0michael/oops.ExampleErrorf_wrapOopsError File:oops_test.go Line:69}]"
 }
 
 func ExampleWrap_nil() {
@@ -102,8 +102,24 @@ func ExampleError_Code() {
 
 	// Output:
 	// oops
-	// level=ERROR msg=error err.err=oops err.source="[{Function:github.com/jesse0michael/oops.ExampleError_Code File:oops_test.go Line:96}]"
+	// level=ERROR msg=error err.err=oops err.source="[{Function:github.com/jesse0michael/oops.ExampleError_Code File:oops_test.go Line:97}]"
 	// 404
+}
+
+func ExampleNew_nonOopsWrappedError() {
+	// This example shows how the LogValue won't be hit for a wrapped error :(
+	l := logger()
+
+	var err error
+	err = New("oops").With("id", "new", "component", "example")
+	err = &wrappedError{underlying: err}
+
+	fmt.Println(err)
+	l.Error("error", "err", err)
+
+	// Output:
+	// oops
+	// level=ERROR msg=error err=oops
 }
 
 // logger returns a slog logger to use in these example tests that removes non-deterministic and host-specific values.
